@@ -8,8 +8,6 @@ class BaseModel {
         //PAGINATION
 
         // BETWEEN
-
-
     }
 
 

@@ -22,7 +22,6 @@ export const comparePwd = async (pwdPlain, pwdHashed) =>{
 }
 
 export const verifyToken = async (req, res, next) =>{
-    console.log('TEST COOKIES');
-    console.log(req.cookies);
+
     next();
 }

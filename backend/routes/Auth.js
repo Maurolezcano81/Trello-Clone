@@ -1,11 +1,10 @@
 import express from 'express';
 import AuthController from '../controllers/AuthController.js';
-import BaseModel from '../models/BaseModel.js';
 const router = express.Router();
 
 const Auth = new AuthController();
-router.post('/signin', Auth.signup.bind(Auth));
-
+router.post('/signup', Auth.signup.bind(Auth));
+router.post('/signin', Auth.signin.bind(Auth));
 
 
 const AuthRoutes = {

@@ -1,5 +1,4 @@
 import Connection from "../config/database.js";
-
 class Auth {
     constructor() {
         this.db = new Connection();
@@ -7,13 +6,12 @@ class Auth {
     }
 
     async signIn(data) {
-
         try {
-            const query = `SELECT * FROM user where ${data[0]}`
+            const query = `SELECT * FROM user where ${data[0]} = ?`
+            console.log(query);
+            const [results] = await this.con.promise().query(query, [data[1]]);
 
-            const [results] = await this.con.promise().query(query, data[1]);
-
-            return results[0]
+            return results;
         } catch (error) {
             console.error(error.message);
             throw new Error("Error en AUTH MODEL: " + error.message);
@@ -24,12 +22,12 @@ class Auth {
         try {
             const queryUser = "INSERT INTO user(name_user, pwd_user, avatar_url, entity_fk, job_user, department_user, status_user, created_at, updated_at) values(?, ?, ?, ?, ?, ?, 1, now(), now())";
 
-            const [resultsUser] = await this.con.promise().query(queryUser, [            data.name_user,
-                data.pwd_user,
-                data.avatar_url,
-                data.entity_fk,
-                data.job_user,
-                data.department_user]);
+            const [resultsUser] = await this.con.promise().query(queryUser, [data.name_user,
+            data.pwd_user,
+            data.avatar_url,
+            data.entity_fk,
+            data.job_user,
+            data.department_user]);
 
             return {
                 lastId: resultsUser.insertId,
