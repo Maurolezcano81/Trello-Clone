@@ -2,16 +2,27 @@ import jsonwebtoken from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 
 
-const createToken = (data) =>{
-    const token = jsonwebtoken.sign(data, process.env.JSON_TOKEN, {
+export const createToken = async (data) => {
+    const token = await jsonwebtoken.sign(data, process.env.JSON_TOKEN, {
         expiresIn: '1h'
     })
 
     return token;
 }
 
-// const validateToken = (token) =>{
-//     jsonwebtoken.verify(token, process.env.JSON_TOKEN, {
+export const encryptPwd = async (pwd) => {
+    const hashedPwd = bcryptjs.hash(pwd, 10)
 
-//     })
-// }
+    return hashedPwd;
+}
+
+export const comparePwd = async (pwdPlain, pwdHashed) =>{
+    const compare = await bcryptjs.compare(pwdPlain, pwdHashed);
+    return compare;
+}
+
+export const verifyToken = async (req, res, next) =>{
+    console.log('TEST COOKIES');
+    console.log(req.cookies);
+    next();
+}

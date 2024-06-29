@@ -10,17 +10,10 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+import AuthRoutes from "./routes/Auth.js";
 
-import Connection from "./config/database.js";
+app.use('/auth', AuthRoutes.router);
 
 app.listen(process.env.SV_PORT || 3000, async () => {
     console.log(`Server corriendo en ${process.env.SV_PORT}`);
-    const con = new Connection();
-    const db = await con.createCon();
-
-    if(db){
-        console.log(`Conectado a la BD: ${db.config.database}`);
-    } else{
-        console.log("Error al conectar a la base de datos");
-    }
 })
